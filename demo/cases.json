@@ -1,0 +1,476 @@
+{
+  "cases": [
+    {
+      "file": "samples/jsyun-ep1.m3u8",
+      "label": "yhdmtv 加速云 ep1（暴风 bfzym3u8 / 形态1：adjump 路径关键词，规则A）",
+      "expectCleaned": true,
+      "removedSegments": 9,
+      "keptSegments": 312,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/gqyun-ep1.m3u8",
+      "label": "yhdmtv 高清云 ep1（量子 lzm3u8 / 形态2变体a：编号三明治，规则C）",
+      "expectCleaned": true,
+      "removedSegments": 7,
+      "keptSegments": 301,
+      "rule": "C",
+      "adSubstrings": [
+        "0647301"
+      ]
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_加速云_ep3.m3u8",
+      "label": "加速云 ep3（规则A，单插 9 片）",
+      "expectCleaned": true,
+      "removedSegments": 9,
+      "keptSegments": 287,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-smp/电影样本_加速云_双插.m3u8",
+      "label": "加速云 长片双插（规则A，两处 18 片）",
+      "expectCleaned": true,
+      "removedSegments": 18,
+      "keptSegments": 1841,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_高清云_ep3.m3u8",
+      "label": "高清云 ep3（规则C，编号三明治 7 片）",
+      "expectCleaned": true,
+      "removedSegments": 7,
+      "keptSegments": 287,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_火箭云_ep3.m3u8",
+      "label": "火箭云 ep3（规则D，hash 赌博块 5 片）",
+      "expectCleaned": true,
+      "removedSegments": 5,
+      "keptSegments": 287,
+      "rule": "D",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_免费云_ep3.m3u8",
+      "label": "免费云 ep3（零扰动对照：播放列表层零广告）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 575,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_高清云_index.m3u8",
+      "label": "master/index 不触碰（高清云_index）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_高清云_ep3_master.m3u8",
+      "label": "master/index 不触碰（高清云_ep3_master）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_火箭云_index.m3u8",
+      "label": "master/index 不触碰（火箭云_index）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_火箭云_ep3_master.m3u8",
+      "label": "master/index 不触碰（火箭云_ep3_master）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_免费云_index.m3u8",
+      "label": "master/index 不触碰（免费云_index）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-smp/凡人修仙传_免费云_ep3_master.m3u8",
+      "label": "master/index 不触碰（免费云_ep3_master）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_加速云_root.m3u8",
+      "label": "凡人修仙传/加速云（规则A 9 片）",
+      "expectCleaned": true,
+      "removedSegments": 9,
+      "keptSegments": 312,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_高清云_media.m3u8",
+      "label": "凡人修仙传/高清云（规则C 7 片）",
+      "expectCleaned": true,
+      "removedSegments": 7,
+      "keptSegments": 301,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_火箭云_media.m3u8",
+      "label": "凡人修仙传/火箭云（规则D 5 片）",
+      "expectCleaned": true,
+      "removedSegments": 5,
+      "keptSegments": 312,
+      "rule": "D",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_免费云_media.m3u8",
+      "label": "凡人修仙传/免费云（零扰动对照）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 625,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_加速云_root.m3u8",
+      "label": "万界独尊/加速云（规则A 9 片）",
+      "expectCleaned": true,
+      "removedSegments": 9,
+      "keptSegments": 145,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_高清云_media.m3u8",
+      "label": "万界独尊/高清云（规则C 7 片）",
+      "expectCleaned": true,
+      "removedSegments": 7,
+      "keptSegments": 150,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_火箭云_media.m3u8",
+      "label": "万界独尊/火箭云（规则D 5 片）",
+      "expectCleaned": true,
+      "removedSegments": 5,
+      "keptSegments": 145,
+      "rule": "D",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_免费云_media.m3u8",
+      "label": "万界独尊/免费云（零扰动对照）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 290,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-jp-小书痴的下克上_加速云_root.m3u8",
+      "label": "日漫/加速云（规则A 9 片，跨品类）",
+      "expectCleaned": true,
+      "removedSegments": 9,
+      "keptSegments": 1921,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/anime-us-苍蓝传承_加速云_root.m3u8",
+      "label": "美漫/加速云（规则A 9 片，跨品类）",
+      "expectCleaned": true,
+      "removedSegments": 9,
+      "keptSegments": 537,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/anime-mv-仙逆剧场版_加速云_root.m3u8",
+      "label": "剧场版/加速云（规则A 双插 18 片）",
+      "expectCleaned": true,
+      "removedSegments": 18,
+      "keptSegments": 1841,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/anime-mv-怪化猫蛇神_免费云_media.m3u8",
+      "label": "剧场版/免费云（零扰动对照，2670 片长列表）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 2670,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-tw-港台作品_高清云_media.m3u8",
+      "label": "港台/高清云（规则C 双插 14 片）",
+      "expectCleaned": true,
+      "removedSegments": 14,
+      "keptSegments": 870,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/movie-敢死队4最终章_高清云_media.m3u8",
+      "label": "电影/高清云（规则C 三插 21 片，159-DIS 密集噪声列表）",
+      "expectCleaned": true,
+      "removedSegments": 21,
+      "keptSegments": 1527,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/movie-敢死队4最终章_免费云_media.m3u8",
+      "label": "电影/免费云（零扰动对照；CDN 内容已轮换，命名存疑）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 622,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/movie-狂怒者荣誉之战_加速云_root.m3u8",
+      "label": "电影/加速云（规则A 双插 18 片）",
+      "expectCleaned": true,
+      "removedSegments": 18,
+      "keptSegments": 2107,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/movie-狂怒者荣誉之战_高清云_media.m3u8",
+      "label": "电影/高清云（规则C 双插 14 片）",
+      "expectCleaned": true,
+      "removedSegments": 14,
+      "keptSegments": 1582,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-爱情保卫战_加速云_root.m3u8",
+      "label": "综艺/加速云（规则A 双插 18 片）",
+      "expectCleaned": true,
+      "removedSegments": 18,
+      "keptSegments": 1763,
+      "rule": "A",
+      "adSubstrings": [
+        "adjump"
+      ]
+    },
+    {
+      "file": "samples/raw-work/variety-爱情保卫战_高清云_media.m3u8",
+      "label": "综艺/高清云（规则C 双插 14 片）",
+      "expectCleaned": true,
+      "removedSegments": 14,
+      "keptSegments": 900,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-爱情保卫战_免费云_media.m3u8",
+      "label": "综艺/免费云（零扰动对照）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 1764,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-披荆斩棘6_高清云_media.m3u8",
+      "label": "综艺/高清云（规则C 双插 14 片 + 3 片尾组 suspect）",
+      "expectCleaned": true,
+      "removedSegments": 14,
+      "keptSegments": 816,
+      "rule": "C",
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-你好星期六_火箭云_media.m3u8",
+      "label": "综艺/火箭云（零扰动对照：193-DIS 纯噪声列表无广告）",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 1138,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_免费云_root.m3u8",
+      "label": "anime-cn-万界独尊_免费云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_火箭云_root.m3u8",
+      "label": "anime-cn-万界独尊_火箭云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-万界独尊_高清云_root.m3u8",
+      "label": "anime-cn-万界独尊_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_免费云_root.m3u8",
+      "label": "anime-cn-凡人修仙传_免费云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_火箭云_root.m3u8",
+      "label": "anime-cn-凡人修仙传_火箭云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-cn-凡人修仙传_高清云_root.m3u8",
+      "label": "anime-cn-凡人修仙传_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-mv-怪化猫蛇神_免费云_root.m3u8",
+      "label": "anime-mv-怪化猫蛇神_免费云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/anime-tw-港台作品_高清云_root.m3u8",
+      "label": "anime-tw-港台作品_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/movie-敢死队4最终章_免费云_root.m3u8",
+      "label": "movie-敢死队4最终章_免费云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/movie-敢死队4最终章_高清云_root.m3u8",
+      "label": "movie-敢死队4最终章_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/movie-狂怒者荣誉之战_高清云_root.m3u8",
+      "label": "movie-狂怒者荣誉之战_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-你好星期六_火箭云_root.m3u8",
+      "label": "variety-你好星期六_火箭云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-披荆斩棘6_高清云_root.m3u8",
+      "label": "variety-披荆斩棘6_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-爱情保卫战_免费云_root.m3u8",
+      "label": "variety-爱情保卫战_免费云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    },
+    {
+      "file": "samples/raw-work/variety-爱情保卫战_高清云_root.m3u8",
+      "label": "variety-爱情保卫战_高清云 master 不触碰",
+      "expectCleaned": false,
+      "removedSegments": 0,
+      "keptSegments": 0,
+      "rule": null,
+      "adSubstrings": []
+    }
+  ]
+}

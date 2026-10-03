@@ -1,0 +1,8 @@
+# 分发产物与本地开发产物不入库
+*.zip
+
+# 真实采样播放列表（含具体站点 CDN URL），不随仓库公开；自行采样方法见 demo/README.md
+demo/samples/
+
+# 历史调试脚本归档
+demo/scratch/

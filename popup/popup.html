@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>M3U8 广告过滤器</h1>
+    <span id="version" class="version"></span>
+  </header>
+
+  <section class="site-row">
+    <span id="host" class="host">…</span>
+    <!-- 开关：checkbox + 滑块样式 -->
+    <label class="switch" title="本站点启用/禁用">
+      <input type="checkbox" id="enabled">
+      <span class="slider"></span>
+    </label>
+  </section>
+
+  <section class="stats">
+    <div class="stat-row"><span>检查的播放列表</span><b id="checked">0</b></div>
+    <div class="stat-row"><span>清洗的播放列表</span><b id="cleaned">0</b></div>
+    <div class="stat-row"><span>剔除广告分片</span><b id="removed">0</b></div>
+    <div class="stat-row"><span>疑似广告(未删)</span><b id="suspects">0</b></div>
+  </section>
+
+  <section class="last-url">
+    <span class="label">最近处理</span>
+    <div id="lastUrl" class="url">—</div>
+  </section>
+
+  <footer>
+    <button id="resetStats" class="btn">清零统计</button>
+    <button id="resetOverride" class="btn">恢复默认</button>
+  </footer>
+
+  <p id="hint" class="hint hidden">统计为空？刷新视频页面后重试。</p>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+/* popup 样式：固定宽度、深浅色自适应、无外部依赖 */
+:root {
+  color-scheme: light dark;
+  --fg: #1f2328;
+  --muted: #6b7280;
+  --bg: #ffffff;
+  --bg2: #f5f6f8;
+  --accent: #2563eb;
+  --border: #e2e5ea;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e6e8eb;
+    --muted: #9aa1aa;
+    --bg: #1d2126;
+    --bg2: #262b31;
+    --accent: #6ea8fe;
+    --border: #3a4048;
+  }
+}
+
+body {
+  width: 320px;
+  margin: 0;
+  padding: 12px 14px;
+  font: 13px/1.5 system-ui, "Microsoft YaHei", sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+h1 { font-size: 15px; margin: 0; }
+.version { color: var(--muted); font-size: 11px; }
+
+.site-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+.host { font-weight: 600; word-break: break-all; margin-right: 8px; }
+
+/* 滑块开关 */
+.switch { position: relative; display: inline-block; flex: none; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  display: block;
+  width: 36px; height: 20px;
+  background: var(--muted);
+  border-radius: 10px;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 2px;
+  width: 16px; height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.15s;
+}
+.switch input:checked + .slider { background: var(--accent); }
+.switch input:checked + .slider::before { transform: translateX(16px); }
+
+.stats {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.stat-row + .stat-row { border-top: 1px dashed var(--border); }
+.stat-row b { font-variant-numeric: tabular-nums; }
+
+.last-url { margin-bottom: 10px; }
+.last-url .label { color: var(--muted); font-size: 11px; }
+.url {
+  font: 11px/1.4 Consolas, monospace;
+  color: var(--muted);
+  background: var(--bg2);
+  border-radius: 6px;
+  padding: 5px 7px;
+  word-break: break-all;
+  max-height: 48px;
+  overflow: hidden;
+}
+
+footer { display: flex; gap: 8px; }
+.btn {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 12px;
+  color: var(--fg);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.hint { color: var(--muted); font-size: 11px; margin: 8px 0 0; }
+.hidden { display: none; }
