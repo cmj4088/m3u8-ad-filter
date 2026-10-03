@@ -48,6 +48,9 @@ h1 { font-size: 15px; margin: 0; }
   margin-bottom: 10px;
 }
 .host { font-weight: 600; word-break: break-all; margin-right: 8px; }
+/* 浮层开关行：与站点开关区分（文字弱化 + 紧贴上一行） */
+.overlay-row { margin-top: -6px; }
+.overlay-row .host { font-weight: 400; color: var(--muted); font-size: 12px; }
 
 /* 滑块开关 */
 .switch { position: relative; display: inline-block; flex: none; }

@@ -39,6 +39,29 @@
     } catch (e) { /* 失败不影响过滤 */ }
   }
 
+  // ---- 浮层通知：清洗发生时把本次增量交给 overlay.js（v1.1 播放器清洗浮层）----
+  // 清洗前快照（removedByRule 是引擎写入 stats 的累计值，需差分出本次明细）
+  function snapshotStats() {
+    var rules = {};
+    var by = stats.removedByRule || {};
+    for (var r in by) rules[r] = by[r];
+    return { removed: stats.segmentsRemoved, rules: rules };
+  }
+  // overlay.js 未注入/未加载时静默，不影响过滤主链路
+  function notifyOverlay(before) {
+    var ov = window.__M3U8Overlay;
+    if (!ov) return;
+    var removed = stats.segmentsRemoved - before.removed;
+    if (removed <= 0) return;
+    var parts = [];
+    var by = stats.removedByRule || {};
+    for (var r in by) {
+      var d = (by[r] || 0) - (before.rules[r] || 0);
+      if (d > 0) parts.push(r + '×' + d);
+    }
+    try { ov.notify({ count: removed, rules: parts.join(' '), time: Date.now() }); } catch (e) {}
+  }
+
   function maybePlaylist(url) {
     if (!url) return false;
     return /\.m3u8(\?|$)/i.test(url) || /m3u8/i.test(url);
@@ -52,11 +75,13 @@
       if (!engine.isM3U8Text(text)) return;
       stats.playlistsChecked++;
       stats.lastUrl = xhr.__adfilterUrl || '';
+      var before = snapshotStats();
       var cleaned = engine.filterPlaylist(text, stats);
       if (cleaned !== text) {
         stats.playlistsCleaned++;
         defineShim(xhr, cleaned);
         console.log('[M3U8-AdFilter] 已剔除 ' + stats.segmentsRemoved + ' 个广告分片 <-', stats.lastUrl);
+        notifyOverlay(before);
       }
       pushStats();
     } catch (e) { /* responseType 非 text 时忽略 */ }
@@ -126,11 +151,13 @@
               if (!engine.isM3U8Text(text)) return resp;
               stats.playlistsChecked++;
               stats.lastUrl = url;
+              var before = snapshotStats();
               var cleaned = engine.filterPlaylist(text, stats);
               pushStats();
               if (cleaned !== text) {
                 stats.playlistsCleaned++;
                 console.log('[M3U8-AdFilter] 已剔除 ' + stats.segmentsRemoved + ' 个广告分片 <-', url);
+                notifyOverlay(before);
                 return new Response(cleaned, { status: resp.status, statusText: resp.statusText, headers: resp.headers });
               }
               return resp;

@@ -21,6 +21,10 @@
     chrome.runtime.sendMessage({ type: 'getEnabled' }, function (res) {
       if (chrome.runtime.lastError || !res) return;
       window.postMessage({ __m3u8FilterMsg: { kind: 'setEnabled', enabled: !!res.enabled } }, '*');
+      // 浮层开关一并下发（v1.1；background 未回该字段时保持 MAIN 默认 true）
+      if (typeof res.overlayEnabled === 'boolean') {
+        window.postMessage({ __m3u8FilterMsg: { kind: 'overlayEnabled', enabled: res.overlayEnabled } }, '*');
+      }
     });
   } catch (e) { /* 扩展上下文失效（如重载后旧页面）时静默 */ }
 
@@ -28,6 +32,8 @@
   chrome.runtime.onMessage.addListener(function (msg) {
     if (msg && msg.type === 'setEnabled') {
       window.postMessage({ __m3u8FilterMsg: { kind: 'setEnabled', enabled: !!msg.enabled } }, '*');
+    } else if (msg && msg.type === 'setOverlay') {
+      window.postMessage({ __m3u8FilterMsg: { kind: 'overlayEnabled', enabled: !!msg.enabled } }, '*');
     } else if (msg && msg.type === 'resetStats') {
       window.postMessage({ __m3u8FilterMsg: { kind: 'resetStats' } }, '*');
     }

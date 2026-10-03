@@ -32,13 +32,19 @@ async function resolveEnabled(host) {
   return defaultEnabled !== false;
 }
 
+// 浮层显示开关（全局，不分站点；默认显示）
+async function resolveOverlayEnabled() {
+  const { overlayEnabled = true } = await chrome.storage.local.get('overlayEnabled');
+  return overlayEnabled !== false;
+}
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   (async () => {
     switch (msg && msg.type) {
       // bridge 初始化询问：本 tab 是否启用
       case 'getEnabled': {
         const host = sender.tab ? topHostOf(sender.tab.url) : null;
-        sendResponse({ enabled: await resolveEnabled(host), host });
+        sendResponse({ enabled: await resolveEnabled(host), overlayEnabled: await resolveOverlayEnabled(), host });
         break;
       }
       // MAIN 世界的统计上报（经 bridge 转发）：按 (tabId, frameId) 覆盖暂存
@@ -76,7 +82,16 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           sum.suspects += s.suspects || 0;
           if (s.lastUrl) sum.lastUrl = s.lastUrl;
         }
-        sendResponse({ ok: true, host, enabled, stats: sum });
+        sendResponse({ ok: true, host, enabled, overlayEnabled: await resolveOverlayEnabled(), stats: sum });
+        break;
+      }
+      // 浮层开关（全局）：写 storage 后下行到该 tab 所有 frame
+      case 'popup:setOverlay': {
+        await chrome.storage.local.set({ overlayEnabled: !!msg.enabled });
+        if (tab) {
+          chrome.tabs.sendMessage(tab.id, { type: 'setOverlay', enabled: !!msg.enabled }, () => void chrome.runtime.lastError);
+        }
+        sendResponse({ ok: true, overlayEnabled: !!msg.enabled });
         break;
       }
       case 'popup:setEnabled': {

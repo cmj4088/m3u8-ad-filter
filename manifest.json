@@ -1,13 +1,13 @@
 {
   "manifest_version": 3,
   "name": "M3U8 广告分片过滤器",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "自动识别并移除 HLS 视频流中注入的广告分片（路径关键词/编号跳变/KEY 三明治等各类手法），消除广告导致的音频中断和音量突跳。所有网站通用，支持按站点开关。",
   "minimum_chrome_version": "111",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/m3u8-engine.js", "src/rules.js", "src/filter-main.js"],
+      "js": ["src/m3u8-engine.js", "src/rules.js", "src/filter-main.js", "src/overlay.js"],
       "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true,

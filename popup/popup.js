@@ -20,6 +20,8 @@ async function refresh() {
   }
   $('host').textContent = res.host || '(未知站点)';
   $('enabled').checked = !!res.enabled;
+  // 浮层开关（全局设置，默认显示）
+  $('overlayEnabled').checked = res.overlayEnabled !== false;
   $('checked').textContent = res.stats.playlistsChecked;
   $('cleaned').textContent = res.stats.playlistsCleaned;
   $('removed').textContent = res.stats.segmentsRemoved;
@@ -34,6 +36,11 @@ async function refresh() {
 $('enabled').addEventListener('change', async (ev) => {
   await chrome.runtime.sendMessage({ type: 'popup:setEnabled', enabled: ev.target.checked });
   refresh();
+});
+
+// 浮层开关（全局：storage 持久化 + 下行所有 frame 的 overlay.js）
+$('overlayEnabled').addEventListener('change', async (ev) => {
+  await chrome.runtime.sendMessage({ type: 'popup:setOverlay', enabled: ev.target.checked });
 });
 
 // 清零统计（background 与页面 MAIN 计数同时归零）

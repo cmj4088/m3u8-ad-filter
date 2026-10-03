@@ -58,32 +58,49 @@
   - 引入: window.__M3U8Engine（m3u8-engine.js + rules.js 必须先注入，顺序由 manifest 保证）
   - 被引用: manifest.json content_scripts（MAIN world）
 - **最后修改**: 2026-10-04
-- **修改原因**: v1.2.0 加开关/统计上报/resetStats；拦截逻辑抽成 install/uninstall 支持干净卸载
+- **修改原因**: v1.1.0 加浮层通知：`snapshotStats()`（44）/`notifyOverlay(before)`（51）——清洗前快照 removedByRule，清洗后差分出本次规则明细交给 overlay.js；XHR 路径（78/84）与 fetch 路径（154/160）两个清洗点均接入，overlay 未加载时静默
+
+## 文件: src/overlay.js
+- **路径**: C:\Users\32277\m3u8-ad-filter\src\overlay.js
+- **作用**: 播放器清洗提示浮层（MAIN world，v1.1.0 新增）。清洗发生时在播放器右上角浮现半透明小 Toast（3 秒淡出）；点击在其下方展开/收起最近 10 条清洗记录（时间/片数/规则）。样式全部挂在 closed Shadow DOM 内（不污染站点、不被站点污染）。
+- **关键函数/类**:
+  - `window.__M3U8Overlay.notify(entry)`: filter-main 清洗后调用；entry={count, rules('D×5' 格式), time}；记录只存内存（页面刷新即清），最多 10 条；enabled=false 时只记不渲染
+  - `setEnabled(v)`: 开关；关闭时 unmount 卸载 DOM，重开等下一次清洗再出现
+  - `mount()/unmount()`: 懒挂载（首次通知才建 DOM）；attachShadow({mode:'closed'})，host div z-index 2147483647 / pointer-events:none（toast 内层恢复 auto）
+  - `place()`: 定位——优先贴本 frame 内 video 右上角内侧 10px，无 video 兜底视口右上
+  - `render()/toggleList()/scheduleHide()`: 渲染 Toast 文案与记录列表；点击切换展开（展开态不自动隐藏）；收起态 3 秒淡出
+  - message 监听: `{__m3u8FilterMsg:{kind:'overlayEnabled'}}`（来自 bridge 下发全局开关）
+- **依赖关系**:
+  - 引入: 无（自包含，不依赖 engine）
+  - 被引用: manifest.json MAIN entry（js 数组最后一个）；src/filter-main.js（经 window.__M3U8Overlay 弱耦合，不存在时静默）
+- **最后修改**: 2026-10-04
+- **修改原因**: v1.1.0 新增（播放器清洗浮层）
 
 ## 文件: src/bridge.js
 - **路径**: C:\Users\32277\m3u8-ad-filter\src\bridge.js
 - **作用**: ISOLATED world 桥。ISOLATED 独占 chrome.* API，MAIN 无法访问；两侧经 window.postMessage（专有字段 `__m3u8FilterMsg` 防冲突）中转。
 - **关键逻辑**:
-  - 初始化：sendMessage({type:'getEnabled'}) → background 按 sender.tab.url 解析 host 查开关 → postMessage 下发 MAIN
-  - 下行：chrome.runtime.onMessage（setEnabled/resetStats）→ postMessage → MAIN
+  - 初始化：sendMessage({type:'getEnabled'}) → background 按 sender.tab.url 解析 host 查开关 → postMessage 下发 MAIN（回包含 overlayEnabled 时一并下发浮层开关）
+  - 下行：chrome.runtime.onMessage（setEnabled/setOverlay/resetStats）→ postMessage → MAIN
   - 上行：MAIN 的 stats postMessage → chrome.runtime.sendMessage({type:'stats'}) → background
 - **依赖关系**:
   - 引入: chrome.runtime（扩展上下文）
   - 被引用: manifest.json content_scripts（ISOLATED world）
 - **最后修改**: 2026-10-04
-- **修改原因**: v1.2.0 新增（popup 开关功能的桥）
+- **修改原因**: v1.1.0 加浮层开关下行（getEnabled 回包 25/26 行 + setOverlay 转发 35/36 行）
 
 ## 文件: src/background.js
 - **路径**: C:\Users\32277\m3u8-ad-filter\src\background.js
 - **作用**: MV3 service worker，hub 角色（无业务逻辑）：开关解析、统计聚合、popup 通道。
 - **关键逻辑**:
   - `resolveEnabled(host)`: `siteOverrides[host] ?? defaultEnabled`（storage.local）
-  - getEnabled：host 取 `sender.tab.url` 顶层域名（iframe 里的 bridge 不知道顶层站点，必须 background 解析——这是 host_permissions <all_urls> 的用途）
+  - `resolveOverlayEnabled()`: 浮层全局开关（storage.local.overlayEnabled，默认 true，v1.1.0）
+  - getEnabled：host 取 `sender.tab.url` 顶层域名（iframe 里的 bridge 不知道顶层站点，必须 background 解析——这是 host_permissions <all_urls> 的用途）；回包带 overlayEnabled
   - stats：按 (tabId, frameId) 暂存 MAIN 上报的累计值（覆盖式）；tab 关闭/导航时清理
-  - popup:* 通道：getState（host+开关+各 frame 求和）/ setEnabled（写 storage + 下行全 frame）/ resetOverride（删站点覆盖）/ resetStats（清聚合 + 下行清零）
+  - popup:* 通道：getState（host+开关+浮层开关+各 frame 求和）/ setEnabled（写 storage + 下行全 frame）/ setOverlay（写 storage + 下行全 frame，v1.1.0）/ resetOverride（删站点覆盖）/ resetStats（清聚合 + 下行清零）
 - **已知限制**: MV3 worker 休眠丢内存统计（可接受，popup 有提示）；storage 的 siteOverrides 记录用户显式意图（与默认相同的值也写入）
 - **依赖关系**:
   - 引入: chrome.storage / chrome.runtime / chrome.tabs
   - 被引用: manifest.json background.service_worker
 - **最后修改**: 2026-10-04
-- **修改原因**: v1.2.0 新增
+- **修改原因**: v1.1.0 加浮层开关解析与 popup:setOverlay 通道（36-38/47/85/89-95 行）
